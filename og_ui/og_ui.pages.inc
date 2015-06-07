@@ -170,7 +170,6 @@ function og_ui_confirm_subscribe_validate($form, &$form_state) {
  * Submit handler; Confirm OG membership.
  */
 function og_ui_confirm_subscribe_submit($form, &$form_state) {
-  global $user;
   $og_membership = $form_state['og_membership'];
   field_attach_submit('og_membership', $og_membership, $form, $form_state);
   $og_membership->save();
@@ -181,6 +180,7 @@ function og_ui_confirm_subscribe_submit($form, &$form_state) {
 
   if (entity_access('view', $group_type, $group)) {
     $redirect = entity_uri($group_type, $group);
+    drupal_set_message(t('You are now a member of @group.', array('@group' => entity_label($group_type, $group))));
   }
   else {
     // User doesn't have access to the group entity, so redirect to front page,
